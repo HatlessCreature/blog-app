@@ -12,6 +12,10 @@ export default function AddPost() {
         history.push('/posts');
     };
 
+    const handleReset = () => {
+        setNewPost({ title: '', text: '' });
+    };
+
     return (
         <div>
             <h1>Add new post</h1>
@@ -31,6 +35,7 @@ export default function AddPost() {
                     }
                 />
                 <button>Add</button>
+                <button type='button' onClick={handleReset}>Reset</button>
             </form>
         </div>
     )
