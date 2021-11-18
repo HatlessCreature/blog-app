@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PostService from "../services/PostService";
 
 export default function AppPosts() {
     const [posts, setPosts] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         async function retrievePosts() {
@@ -19,8 +20,9 @@ export default function AppPosts() {
             {posts.map((post) => (
                 <div style={{ display: 'flex', flexDirection: 'column', }} key={post.id}>
                     <p>Title: {post.title}</p>
-                    <p>Text:{post.text}</p>
+                    <p>Text: {post.text}</p>
                     <Link to={`/posts/${post.id}`}>View post</Link>
+                    <button onClick={() => history.push(`/edit/${post.id}`)}>Edit post</button>
                 </div>
             ))}
         </div>

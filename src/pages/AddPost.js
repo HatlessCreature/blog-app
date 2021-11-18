@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import PostService from '../services/PostService';
 
 export default function AddPost() {
     const [newPost, setNewPost] = useState({ title: '', text: '' });
     const history = useHistory();
+    const { id } = useParams();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await PostService.add(newPost);
+        if (id) {
+            await PostService.edit(id, newPost);
+        } else {
+            await PostService.add(newPost);
+        }
         history.push('/posts');
     };
 
@@ -16,9 +21,20 @@ export default function AddPost() {
         setNewPost({ title: '', text: '' });
     };
 
+    useEffect(() => {
+        async function retrievePost() {
+            const { id: _, ...restData } = await PostService.get(id);
+            setNewPost(restData);
+        };
+
+        if (id) {
+            retrievePost();
+        }
+    }, [id]);
+
     return (
         <div>
-            <h1>Add new post</h1>
+            <h1>{id ? 'Edit' : 'Add new'} post</h1>
             <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit}>
                 <input
                     value={newPost.title}
@@ -38,7 +54,7 @@ export default function AddPost() {
                     required
                     maxLength={300}
                 />
-                <button>Add</button>
+                <button>{id ? 'Edit' : 'Add'} post</button>
                 <button type='button' onClick={handleReset}>Reset</button>
             </form>
         </div>
