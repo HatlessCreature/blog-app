@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PostService from "../services/PostService";
 
 export default function AppPosts() {
@@ -19,6 +20,7 @@ export default function AppPosts() {
                 <div style={{ display: 'flex', flexDirection: 'column', }} key={post.id}>
                     <p>Title: {post.title}</p>
                     <p>Text:{post.text}</p>
+                    <Link to={`/posts/${post.id}`}>View post</Link>
                 </div>
             ))}
         </div>
