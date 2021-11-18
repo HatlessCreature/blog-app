@@ -26,6 +26,8 @@ export default function AddPost() {
                     onChange={({ target }) =>
                         setNewPost({ ...newPost, title: target.value })
                     }
+                    required
+                    minLength={2}
                 />
                 <input
                     value={newPost.text}
@@ -33,6 +35,8 @@ export default function AddPost() {
                     onChange={({ target }) =>
                         setNewPost({ ...newPost, text: target.value })
                     }
+                    required
+                    maxLength={300}
                 />
                 <button>Add</button>
                 <button type='button' onClick={handleReset}>Reset</button>
