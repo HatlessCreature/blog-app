@@ -14,6 +14,13 @@ export default function AppPosts() {
         retrievePosts();
     }, []);
 
+    const handleDelete = async (id) => {
+        const data = await PostService.delete(id);
+        if (data.count) {
+            setPosts(posts.filter((post) => post.id !== id));
+        }
+    };
+
     return (
         <div>
             <h1>Posts</h1>
@@ -23,6 +30,7 @@ export default function AppPosts() {
                     <p>Text: {post.text}</p>
                     <Link to={`/posts/${post.id}`}>View post</Link>
                     <button onClick={() => history.push(`/edit/${post.id}`)}>Edit post</button>
+                    <button onClick={() => handleDelete(post.id)}>Delete post</button>
                 </div>
             ))}
         </div>

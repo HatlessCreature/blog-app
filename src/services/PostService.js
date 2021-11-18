@@ -50,6 +50,17 @@ class PostService {
         return null;
     }
 
+    async delete(id) {
+        try {
+            const { data } = await this.client.delete(`posts/${id}`);
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+        return null;
+    }
+
 }
 
 
