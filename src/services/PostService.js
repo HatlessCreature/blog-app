@@ -72,6 +72,17 @@ class PostService {
         return null;
     }
 
+    async editComment(id, comment) {
+        try {
+            const { data } = await this.client.put(`comments/${id}`, comment);
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+        return null;
+    }
+
 }
 
 
