@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PostService from '../services/PostService';
 import AddComment from '../components/AddComment';
+import useFormattedDate from '../hooks/useFormattedDate’';
 
 export default function SinglePost() {
     const [post, setPost] = useState({});
     const { id } = useParams();
+    const formattedDate = useFormattedDate(post.createdAt, "dd-MM-yyyy");
 
     useEffect(() => {
         async function retrievePost() {
@@ -23,6 +25,11 @@ export default function SinglePost() {
         <div>
             <h1>{post.title}</h1>
             <p>{post.text}</p>
+            {formattedDate === "unknown" ? (
+                <p>Date unknown</p>
+            ) : (
+                <p>Created at: {formattedDate}</p>
+            )}
             <AddComment
                 postId={post.id}
                 addCommentFunction={handleAddComment}
