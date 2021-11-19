@@ -28,6 +28,11 @@ export default function AppPosts() {
                 <div style={{ display: 'flex', flexDirection: 'column', }} key={post.id}>
                     <p>Title: {post.title}</p>
                     <p>Text: {post.text}</p>
+                    {post.comments && post.comments.length ? (
+                        <span>Number of comments: {post.comments.length}</span>
+                    ) : (
+                        <span>No comments</span>
+                    )}
                     <Link to={`/posts/${post.id}`}>View post</Link>
                     <button onClick={() => history.push(`/edit/${post.id}`)}>Edit post</button>
                     <button onClick={() => handleDelete(post.id)}>Delete post</button>
